@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time is running</title>
+    <style>
+        * {
+            margin: 0;
+            background-color: #13171f;
+            color: #c2c7d0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 3em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1><span id="age"></span></h1>
+    <script>
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function calculateAge(birthDate) {
+            const now = new Date();
+            const ageInMilliseconds = now - birthDate;
+            const ageInSeconds = ageInMilliseconds / 1000;
+            const age = ageInSeconds / (60 * 60 * 24 * 365.25);
+            return age;
+        }
+
+        function updateAge() {
+            const birthDateStr = getQueryParam('birthdate');
+            let birthDate = new Date('2000-01-01T01:01');
+
+            if (birthDateStr) {
+                birthDate = new Date(birthDateStr);
+            }
+            const age = calculateAge(birthDate);
+            document.getElementById('age').innerText = age.toFixed(10);
+        }
+
+        setInterval(updateAge, 100);
+        updateAge();
+
+    </script>
+</body>
+
+</html>
